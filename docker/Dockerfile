@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=debian:11.10-slim
+ARG BASE_IMAGE=ubuntu:25.10
 
 FROM ${BASE_IMAGE}
 
