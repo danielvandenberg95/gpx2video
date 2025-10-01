@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Log in to registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+    - name: Get Short SHA
+      id: get_short_sha
+      run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+    - name: Build and push the Docker image
+      run: |
+        docker build . --file docker/dockerfile --tag ghcr.io/${{ github.actor }}/gpx2video:$SHORT_SHA
+        docker push ghcr.io/${{ github.actor }}/gpx2video:$SHORT_SHA
