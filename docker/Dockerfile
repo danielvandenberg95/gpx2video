@@ -2,6 +2,8 @@ ARG BASE_IMAGE=ubuntu:25.10
 
 FROM ${BASE_IMAGE}
 
+ADD ./docker/locale.ge[n] /etc
+
 RUN apt-get update \
     && apt-get --yes --force-yes dist-upgrade \
     && apt-get install --yes --force-yes --no-install-recommends \
@@ -34,8 +36,6 @@ RUN apt-get update \
 		libpulse-dev \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean all
-
-ADD ./docker/locale.gen* /etc
 
 RUN dpkg-reconfigure --frontend=noninteractive locales && \
     update-locale 
