@@ -35,7 +35,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean all
 
-ADD docker/locale.gen /etc
+ADD docker/locale.gen* /etc
 
 RUN dpkg-reconfigure --frontend=noninteractive locales && \
     update-locale 
